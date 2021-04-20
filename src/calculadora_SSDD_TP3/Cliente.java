@@ -33,7 +33,6 @@ public class Cliente {
  	        Scanner entradaEscaner = new Scanner (System.in); //Creación de un objeto Scanner
 
  	       while (true){
-            	System.out.print( operacion.indexOf("salir"));
                       		
                     System.out.print( "\nEnvia una operacion al servidor: " );
                     operacion = entradaEscaner.nextLine (); //guardamos el dato que se ingrese en la variable operacion     
