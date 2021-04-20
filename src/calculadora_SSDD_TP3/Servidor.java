@@ -127,17 +127,18 @@ public class Servidor {
 
 	        OutputStreamWriter outw = new OutputStreamWriter(cli.getOutputStream(), "UTF8");
 	        InputStreamReader inw = new InputStreamReader(cli.getInputStream(), "UTF8");
-
+	        DataOutputStream out = new DataOutputStream(cli.getOutputStream());
 	        
-	        char[] cbuf = new char[512];
+            char[] cbuf = new char[512];
 
 	        while (true) {
 	            System.out.println("Esperando mensaje del cliente");
 	            String recibido = ""; 
 	            char[] cbuf_aux =  cbuf; 
 	            	inw.read(cbuf);
-	            
-		  	            if(Character.getNumericValue(cbuf[1])==-1) {
+
+		  	           if(Character.getNumericValue(cbuf[1])==-1) {
+		  	         
 		  		            cbuf = Arrays.copyOfRange(cbuf, 2, cbuf.length);
 		  	            }
 		  	            for (char c : cbuf) {
@@ -145,26 +146,30 @@ public class Servidor {
 		  	                if (c == 00) {
 		  	                    break;
 		  	                }
-		  	          }
+		  	            }
 		  	          
-		  	          if(recibido.indexOf("exit") ==-1? true: false) {
+		  	          //if(recibido.indexOf("exit") ==-1? true: false) {
 		  	            System.out.println("Cliente dice: " + recibido);
 		  	          
 		  	            //calculo
 		              	String resultado = cal(recibido);
 		  	            
 		  	            System.out.println("Enviar a cliente: >>>" + resultado);
-		  	            
-		  	            //resultado = "S:" + resultado;
-		  	            outw.write(resultado.toCharArray());
-			  	        outw.flush();
-		  	            
+			  	            
+			  	          if(Character.getNumericValue(cbuf_aux[1])==-1) { // clientes java
+			  	        	out.writeUTF(resultado);
+			  	          }
+			  	          else { // clientes python
+			  	        	outw.write(resultado.toCharArray());
+				  	        outw.flush();
+			  	          }
+		  	        
 		  	            cbuf = new char[512];
-		  	          }
+		  	         /* }
 		  	          else {
 		  	        	server.close();
 		  	        	System.out.println("\n>>>> Cliente desconectado ...");
-		  	          }
+		  	          }*/
 	              
 	            //  server.close();
 	            //  System.out.println("\n>>>> Cliente desconectado ...");
