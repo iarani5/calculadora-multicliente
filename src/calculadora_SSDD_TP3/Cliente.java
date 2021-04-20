@@ -39,20 +39,15 @@ public class Cliente {
                    
                     //Envio la operacion al servidor        
                     out.writeUTF(operacion);               	
-               
+                    if(operacion.indexOf("salir") != -1) {
+		  	        	System.out.println("\n>>>> Cliente desconectado ...");
+		  	        	break;
+		  	        }
                     //Recibo el mensaje del servidor
                      String resultado = in.readUTF();
 
                     System.out.println("\nEl resultado es: "+resultado);
                
-                    
-		  	          if(operacion.indexOf("salir") != -1) {
-		  	        	sc.close();
-		                entradaEscaner.close();
-
-		  	        	System.out.println("\n>>>> Cliente desconectado ...");
-		  	        	 break;
-		  	          }
             }
             sc.close();
             entradaEscaner.close();
