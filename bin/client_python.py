@@ -25,7 +25,7 @@ while True:
     ins = sCliente.recv(512)
     insd = ins.decode("UTF8")
     print("Servidor retorna:", insd)
-    if inp == "exit":
+    if inp == "salir":
         break
 
 sCliente.close()

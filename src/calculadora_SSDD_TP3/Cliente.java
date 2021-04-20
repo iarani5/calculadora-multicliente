@@ -22,6 +22,7 @@ public class Cliente {
         final int PUERTO = 6000;
         DataInputStream in;
         DataOutputStream out;
+        String operacion = ""; //creamos string vacio de operacion  
         
         try {
             //Creo el socket para conectarme con el cliente
@@ -29,13 +30,11 @@ public class Cliente {
             
             in = new DataInputStream(sc.getInputStream());
             out = new DataOutputStream(sc.getOutputStream());
-            while(true) {
-            	
-          
-	       String operacion = ""; //creamos string vacio de operacion  
-	       Scanner entradaEscaner = new Scanner (System.in); //Creación de un objeto Scanner
-          // if (operacion.indexOf("salir") == -1){
-            		
+ 	        Scanner entradaEscaner = new Scanner (System.in); //Creación de un objeto Scanner
+
+ 	       while (true){
+            	System.out.print( operacion.indexOf("salir"));
+                      		
                     System.out.print( "\nEnvia una operacion al servidor: " );
                     operacion = entradaEscaner.nextLine (); //guardamos el dato que se ingrese en la variable operacion     
                    
@@ -47,20 +46,18 @@ public class Cliente {
 
                     System.out.println("\nEl resultado es: "+resultado);
                
-              //Envio mensaje si deseo realizar otra operacion 
-               // Scanner entrada = new Scanner (System.in); //Creación de un objeto Scanner
-                //System.out.println( "\nAprete 's' para realizar otra operacion o cualquier otro digito para finalizar: " );
-              //  peticion = entrada.nextLine (); //guardamos el dato que se ingrese en la variable operacion   
-              //  System.out.println(peticion);              
-              //  out.writeUTF(peticion); 
-               
-          /*  }
-           else {
-            	//Cierro el socket
-                sc.close();
-                entradaEscaner.close();
-           }*/
+                    
+		  	          if(operacion.indexOf("salir") != -1) {
+		  	        	sc.close();
+		                entradaEscaner.close();
+
+		  	        	System.out.println("\n>>>> Cliente desconectado ...");
+		  	        	 break;
+		  	          }
             }
+            sc.close();
+            entradaEscaner.close();
+            
         } catch (IOException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }

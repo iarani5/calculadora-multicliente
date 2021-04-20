@@ -123,8 +123,6 @@ public class Servidor {
 	        System.out.println("Esperando cliente");
 	        Socket cli = server.accept();
 
-	      //  String recibido = "", enviado = "";
-
 	        OutputStreamWriter outw = new OutputStreamWriter(cli.getOutputStream(), "UTF8");
 	        InputStreamReader inw = new InputStreamReader(cli.getInputStream(), "UTF8");
 	        DataOutputStream out = new DataOutputStream(cli.getOutputStream());
@@ -134,6 +132,7 @@ public class Servidor {
 	        while (true) {
 	            System.out.println("Esperando mensaje del cliente");
 	            String recibido = ""; 
+	            
 	            char[] cbuf_aux =  cbuf; 
 	            	inw.read(cbuf);
 
@@ -141,14 +140,14 @@ public class Servidor {
 		  	         
 		  		            cbuf = Arrays.copyOfRange(cbuf, 2, cbuf.length);
 		  	            }
+		  	           
 		  	            for (char c : cbuf) {
 		  	                recibido += c;
 		  	                if (c == 00) {
 		  	                    break;
 		  	                }
 		  	            }
-		  	          
-		  	          //if(recibido.indexOf("exit") ==-1? true: false) {
+		  	         
 		  	            System.out.println("Cliente dice: " + recibido);
 		  	          
 		  	            //calculo
@@ -165,15 +164,12 @@ public class Servidor {
 			  	          }
 		  	        
 		  	            cbuf = new char[512];
-		  	         /* }
-		  	          else {
+		  	          
+		  	          if(recibido.indexOf("salir") != -1) {
 		  	        	server.close();
 		  	        	System.out.println("\n>>>> Cliente desconectado ...");
-		  	          }*/
-	              
-	            //  server.close();
-	            //  System.out.println("\n>>>> Cliente desconectado ...");
-	          
+		  	        	 break;
+		  	          }
 	        }
 
 	    }
